@@ -1,0 +1,4 @@
+C:/Users/Ashim/signalr/cpp_metrics/build/CMakeFiles/indicators.dir
+C:/Users/Ashim/signalr/cpp_metrics/build/CMakeFiles/ALL_BUILD.dir
+C:/Users/Ashim/signalr/cpp_metrics/build/CMakeFiles/ZERO_CHECK.dir
+C:/Users/Ashim/signalr/cpp_metrics/build/pybind11/CMakeFiles/ALL_BUILD.dir

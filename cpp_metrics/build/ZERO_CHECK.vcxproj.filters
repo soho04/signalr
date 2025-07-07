@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\Ashim\signalr\cpp_metrics\build\CMakeFiles\ec2f8229a8c205ad634b6db3d5996353\generate.stamp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{2412C7F1-080E-3B28-AD18-627B82D27CB0}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
