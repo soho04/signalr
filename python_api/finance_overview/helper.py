@@ -8,7 +8,7 @@ def get_ticker(symbol: str) -> yf.Ticker:
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Invalid symbol or yfinance error: {e}")
 
-def helper_safe_get(df: pd.Dataframe, key: str, scale: float = 1.0) -> float | None:
+def helper_safe_get(df: pd.DataFrame, key: str, scale: float = 1.0) -> float | None:
     try:
         value = df.loc[key].iloc[0]
         if pd.isna(value):

@@ -1,9 +1,6 @@
-from fastapi import FastAPI
 import yfinance as yf
 import pandas as pd
-from helper import get_ticker, helper_safe_get
-
-app = FastAPI()
+from helper import helper_safe_get
     
 def get_company_overview(ticker: yf.Ticker) -> dict:
     profile = ticker.info
@@ -62,29 +59,9 @@ def get_cashflow(Ticker: yf.Ticker) -> dict:
 
     return {
         "operating_cash_flow": helper_safe_get(cf, "Operating Cash Flow", scale),
-        "capital_expenditures": helper_safe_get(cf, "Capital Expenditures", scale) or safe_get(cf, "Capital Expenditure", scale),
+        "capital_expenditures": helper_safe_get(cf, "Capital Expenditures", scale) or helper_safe_get(cf, "Capital Expenditure", scale),
         "free_cash_flow": helper_safe_get(cf, "Free Cash Flow", scale),
         "investing_cash_flow": helper_safe_get(cf, "Investing Cash Flow", scale),
         "financing_cash_flow": helper_safe_get(cf, "Financing Cash Flow", scale),
         "net_change_in_cash": helper_safe_get(cf, "Change In Cash", scale)
     }
-
-@app.get("/overview/{symbol}")
-def overview(symbol: str):
-    ticker = get_ticker(symbol)
-    return get_company_overview(ticker)
-
-@app.get("/income-statement/{symbol}")
-def income(symbol: str):
-    ticker = get_ticker(symbol)
-    return get_company_overview(ticker)
-
-@app.get("/balance-sheet/{symbol}")
-def balance(symbol: str):
-    ticker = get_ticker(symbol)
-    return get_company_overview(ticker)
-
-@app.get("/cashflow/{symbol}")
-def cashflow(symbol: str):
-    ticker = get_ticker(symbol)
-    return get_company_overview(ticker)

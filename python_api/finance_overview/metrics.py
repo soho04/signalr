@@ -1,38 +1,47 @@
 from fastapi import HTTPException
-from helper import helper_safe_get, get_ticker
+from helper import get_ticker
 import yfinance as yf
 import pandas as pd
 
-def valuation(ticker: yf.Ticker) -> dict:
+def get_valuation(ticker: yf.Ticker) -> dict:
     info = ticker.info
     
     return {
-        "trailing_PE": helper_safe_get(info, "trailingPE"),
-        "forward_PE": helper_safe_get(info, "forwardPE"),
-        "ebidta": helper_safe_get(info, "ebitda"),
-        "price_to_book": helper_safe_get(info, "priceToBook")
+        "trailing_PE": info.get("trailingPE"),
+        "forward_PE": info.get("forwardPE"),
+        "ebidta": info.get("ebitda"),
+        "price_to_book": info.get("priceToBook")
     }
 
-def profitability(ticker: yf.Ticker) -> dict:
+def get_profitability(ticker: yf.Ticker) -> dict:
     info = ticker.info
 
     return {
-        "return_on_equity": helper_safe_get(info, "returnOnEquity"),
-        "return_on_assets": helper_safe_get(info, "returnOnAssets"),
-        "ebidta": helper_safe_get(info, "ebitda"),
-        "profit_margins": helper_safe_get(info, "profitMargins"),
-        "gross_margins": helper_safe_get(info, "grossMargins"),
-        "operating_margin": helper_safe_get(info, "operatingMargins"),
-        "gross_profits": helper_safe_get(info, "grossProfits"),
+        "return_on_equity": info.get("returnOnEquity"),
+        "return_on_assets": info.get("returnOnAssets"),
+        "ebidta": info.get("ebitda"),
+        "profit_margins": info.get("profitMargins"),
+        "gross_margins": info.get("grossMargins"),
+        "operating_margin": info.get("operatingMargins"),
+        "gross_profits": info.get("grossProfits"),
     }
 
-def liquidity(ticker: yf.Ticker) -> dict:
+def get_liquidity(ticker: yf.Ticker) -> dict:
     info = ticker.info
 
     return {
-        
+        "current_ratio": info.get("currentRatio"),
+        "debt_to_equity": info.get("debtToEquity"),
     }
 
-def growth(ticker: yf.Ticker) -> dict:
+def get_growth(ticker: yf.Ticker) -> dict:
     info = ticker.info
+
+    return {
+        "earnings_growth": info.get("earningsGrowth"),
+        "revenue_growth": info.get("revenueGrowth"),
+        "quarterly_earnings_growth": info.get("earningsQuarterlyGrowth"),
+        "target_mean_price": info.get("targetMeanPrice"),
+        "forward_PE": info.get("forwardPE"),
+    }
 
