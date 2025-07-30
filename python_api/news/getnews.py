@@ -1,19 +1,15 @@
 # Retrieve news articles from different sources and merge
-
-from fastapi import FastAPI, HTTPException
 import httpx
-from news.newsclass import NewsItem
 from datetime import datetime, date, timedelta
-from typing import List
 import asyncio
 
 FINNHUB_API_KEY = "d1kht4hr01qt8foomrh0d1kht4hr01qt8foomrhg"
 MARKETAUX_API_KEY = "6WtkONH8y6LUJwdwEeUrsp062EKn3j4G0WUJz66H"
 
-async def get_finnhub_news():
+async def get_finnhub_news(symbol: str):
     url = f"https://finnhub.io/api/v1/company-news"
     params = {
-        "symbol": "PLTR",
+        "symbol": symbol,
         "from": date.today() - timedelta(days=1),
         "to": date.today().isoformat(),
         "token": FINNHUB_API_KEY
@@ -29,13 +25,13 @@ async def get_finnhub_news():
     
     return news_items
 
-async def get_marketaux_news():
+async def get_marketaux_news(symbol: str):
     url = f"https://api.marketaux.com/v1/news/all"
     params = {
         "published_after": date.today() - timedelta(days=1),
         "api_token": MARKETAUX_API_KEY,
         "language": "en",
-        "symbols": "PLTR"
+        "symbols": symbol,
     }
 
     async with httpx.AsyncClient() as client:
