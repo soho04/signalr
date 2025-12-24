@@ -1,8 +1,0 @@
-{
-	"InstallScripts" : 
-	[
-		"C:/Users/Ashim/signalr/cpp_metrics/build/cmake_install.cmake",
-		"C:/Users/Ashim/signalr/cpp_metrics/build/pybind11/cmake_install.cmake"
-	],
-	"Parallel" : false
-}

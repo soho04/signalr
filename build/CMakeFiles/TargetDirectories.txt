@@ -1,4 +1,0 @@
-C:/Users/Ashim/signalr/build/CMakeFiles/indicators.dir
-C:/Users/Ashim/signalr/build/CMakeFiles/ALL_BUILD.dir
-C:/Users/Ashim/signalr/build/CMakeFiles/ZERO_CHECK.dir
-C:/Users/Ashim/signalr/build/pybind11/CMakeFiles/ALL_BUILD.dir
