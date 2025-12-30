@@ -1,7 +1,10 @@
 from fastapi import FastAPI
 from trails import *
+from mangum import Mangum
 
 app = FastAPI()
+
+handler = Mangum(app)
 
 @app.get("/")
 def root():

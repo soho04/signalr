@@ -1,9 +1,13 @@
 from fastapi import FastAPI, HTTPException
 from overview import *
-from helper import get_ticker
+from helper import get_ticker, cached
 from holders import top5_holders
+from mangum import Mangum
+import requests
 
-app = FastAPI()
+app = FastAPI(root_path="/finance")
+
+handler = Mangum(app)
 
 @app.get("/")
 def root():
@@ -12,24 +16,49 @@ def root():
 @app.get("/holders/{symbol}")
 def holders(symbol: str):
    ticker = get_ticker(symbol)
-   return top5_holders(ticker)
+   return cached(
+      key=f"holders:{symbol}",
+      fetch_fn=lambda: yahoo_handler(lambda: top5_holders(ticker)),
+      ttl=300
+   )
 
 @app.get("/overview/{symbol}")
 def overview(symbol: str):
    ticker = get_ticker(symbol)
-   return get_company_overview(ticker)
+   return cached(
+      key=f"overview:{symbol}",
+      fetch_fn=lambda: yahoo_handler(lambda: get_company_overview(ticker)),
+      ttl=300
+   )
 
 @app.get("/income-statement/{symbol}")
 def income(symbol: str):
    ticker = get_ticker(symbol)
-   return get_income_statement(ticker)
+   return cached(
+      key=f"income-statement:{symbol}",
+      fetch_fn=lambda: yahoo_handler(lambda: get_income_statement(ticker)),
+      ttl=300
+   )
 
-@app.get("/growth/{symbol}")
-def get_growth(symbol: str):
-   ticker = get_ticker(symbol)
-   return get_growth(ticker)
+def yahoo_handler(fetch_fn):
+    try:
+        return fetch_fn()
 
-@app.get("/revenue_trail/{symbol}")
-def get_revenue_trail(symbol: str):
-   ticker = get_ticker(symbol)
-   return get_revenue_trail(ticker)
+    except requests.HTTPError as e:
+        if e.response is not None and e.response.status_code == 429:
+            raise HTTPException(
+                status_code=429,
+                detail="Yahoo Finance rate limit exceeded. Please try again shortly."
+            )
+        raise HTTPException(
+            status_code=502,
+            detail="Upstream Yahoo Finance error."
+        )
+
+    except Exception:
+        raise HTTPException(
+            status_code=500,
+            detail="Internal server error while fetching market data."
+        )
+
+

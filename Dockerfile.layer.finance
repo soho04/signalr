@@ -1,0 +1,11 @@
+FROM public.ecr.aws/lambda/python:3.11
+
+ENTRYPOINT []
+
+RUN pip install --upgrade pip && \
+    pip install \
+        numpy==1.26.4 \
+        pandas==2.1.4 \
+        yfinance \
+        --only-binary=:all: \
+        -t /opt/python
