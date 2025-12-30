@@ -1,15 +1,18 @@
 from fastapi import FastAPI, HTTPException
-from sec_module.trails import *
-from yfinance_module.overview import *
-from yfinance_module.helper import get_ticker
-from yfinance_module.holders import top5_holders
-from sec_module.trails import *
+from overview import *
+from helper import get_ticker
+from holders import top5_holders
 
 app = FastAPI()
 
-@app.get("/test/{symbol}")
-def test(symbol: str):
-   return top5_holders(symbol)
+@app.get("/")
+def root():
+    return {"message": "finance Lambda is running"}
+
+@app.get("/holders/{symbol}")
+def holders(symbol: str):
+   ticker = get_ticker(symbol)
+   return top5_holders(ticker)
 
 @app.get("/overview/{symbol}")
 def overview(symbol: str):
@@ -30,4 +33,3 @@ def get_growth(symbol: str):
 def get_revenue_trail(symbol: str):
    ticker = get_ticker(symbol)
    return get_revenue_trail(ticker)
-

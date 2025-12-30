@@ -1,4 +1,4 @@
-from yfinance_module.helper import get_ticker
+from helper import get_ticker
 
 def top5_holders(Ticker: str) -> dict:
     ticker = get_ticker("PLTR")

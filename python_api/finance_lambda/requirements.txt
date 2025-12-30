@@ -1,0 +1,3 @@
+fastapi==0.128.0
+pandas==2.3.3
+yfinance==0.2.66

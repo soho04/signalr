@@ -1,6 +1,5 @@
 import yfinance as yf
-import pandas as pd
-from yfinance_module.helper import helper_safe_get
+from helper import helper_safe_get
     
 def get_company_overview(ticker: yf.Ticker) -> dict:
     profile = ticker.info

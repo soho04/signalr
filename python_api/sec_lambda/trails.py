@@ -1,6 +1,6 @@
 import numpy as np
 import pandas as pd
-from sec_module.sec import retrieve_filing
+from sec import retrieve_filing
 
 tags = ["Revenues", "SalesRevenueNet", "RevenueFromContractWithCustomerExcludingAssessedTax"]
 eps_tags = ["EarningsPerShareDiluted", "EarningsPerShareBasic"]
